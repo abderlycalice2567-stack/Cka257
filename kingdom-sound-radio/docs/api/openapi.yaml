@@ -1,0 +1,163 @@
+openapi: 3.1.0
+info:
+  title: The Kingdom Sound Radio API
+  version: 1.0.0
+  description: Public and subscriber API. Times are UTC (ISO 8601). Translatable fields are objects keyed by language (en, fr, ht).
+servers:
+  - url: /api/v1
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: {}
+    Tr:
+      type: object
+      properties: { en: { type: string }, fr: { type: string }, ht: { type: string } }
+    Program:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        slug: { type: string }
+        title: { $ref: '#/components/schemas/Tr' }
+        summary: { $ref: '#/components/schemas/Tr' }
+        languages: { type: array, items: { type: string, enum: [en, fr, ht] } }
+        category_slug: { type: [string, 'null'] }
+        presenters: { type: array, items: { type: object, properties: { slug: { type: string }, display_name: { type: string } } } }
+        podcast_enabled: { type: boolean }
+        is_sample: { type: boolean }
+    Episode:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        slug: { type: string }
+        title: { type: string }
+        description: { type: string }
+        language: { type: string, enum: [en, fr, ht] }
+        published_at: { type: string, format: date-time }
+        duration_seconds: { type: [integer, 'null'] }
+        scripture_refs: { type: array, items: { type: string } }
+        topics: { type: array, items: { type: string } }
+        program_slug: { type: string }
+        audio_url: { type: [string, 'null'] }
+    Occurrence:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        starts_at: { type: string, format: date-time }
+        ends_at: { type: string, format: date-time }
+        status: { type: string, enum: [scheduled, cancelled, rescheduled, aired] }
+        is_special: { type: boolean }
+        is_rebroadcast: { type: boolean }
+        program_slug: { type: string }
+        program_title: { $ref: '#/components/schemas/Tr' }
+  responses:
+    RateLimited: { description: Too many requests, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    NotFound: { description: Not found, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+    Unauthenticated: { description: Sign in required, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+  securitySchemes:
+    session: { type: apiKey, in: cookie, name: ksr_session }
+paths:
+  /radio/status:
+    get:
+      summary: Stream configuration and engine health
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  configured: { type: boolean }
+                  streams: { type: array, items: { type: object, properties: { label: { type: string }, url: { type: string }, bitrateKbps: { type: integer }, format: { type: string }, default: { type: boolean } } } }
+                  engine: { type: object, properties: { provider: { type: string, enum: [none, azuracast] }, reachable: { type: boolean }, online: { type: [boolean, 'null'] }, listeners: { type: [integer, 'null'] } } }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /radio/now-playing:
+    get:
+      summary: Current and next program; engine metadata if connected
+      parameters: [{ name: locale, in: query, schema: { type: string, enum: [en, fr, ht] } }]
+      responses: { '200': { description: OK }, '429': { $ref: '#/components/responses/RateLimited' } }
+  /programs:
+    get:
+      summary: List published programs
+      parameters:
+        - { name: category, in: query, schema: { type: string } }
+        - { name: language, in: query, schema: { type: string, enum: [en, fr, ht] } }
+        - { name: featured, in: query, schema: { type: boolean } }
+      responses: { '200': { description: OK, content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: '#/components/schemas/Program' } } } } } } } }
+  /programs/{slug}:
+    get:
+      parameters: [{ name: slug, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: OK }, '404': { $ref: '#/components/responses/NotFound' } }
+  /schedule:
+    get:
+      summary: Broadcast occurrences in a window (max 14 days)
+      parameters:
+        - { name: from, in: query, schema: { type: string, format: date-time } }
+        - { name: to, in: query, schema: { type: string, format: date-time } }
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { type: object, properties: { timezone: { type: string }, items: { type: array, items: { $ref: '#/components/schemas/Occurrence' } } } } } } }
+        '422': { description: Invalid range }
+  /schedule/ics:
+    get:
+      summary: iCalendar export
+      parameters:
+        - { name: program, in: query, schema: { type: string } }
+        - { name: category, in: query, schema: { type: string } }
+      responses: { '200': { description: text/calendar } }
+  /episodes:
+    get:
+      parameters:
+        - { name: q, in: query, schema: { type: string } }
+        - { name: program, in: query, schema: { type: string } }
+        - { name: category, in: query, schema: { type: string } }
+        - { name: language, in: query, schema: { type: string } }
+        - { name: presenter, in: query, schema: { type: string } }
+        - { name: page, in: query, schema: { type: integer, minimum: 1 } }
+        - { name: pageSize, in: query, schema: { type: integer, minimum: 1, maximum: 50 } }
+      responses: { '200': { description: OK, content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: '#/components/schemas/Episode' } }, total: { type: integer }, page: { type: integer }, pageSize: { type: integer } } } } } } }
+  /episodes/{id}:
+    get:
+      parameters: [{ name: id, in: path, required: true, schema: { type: string, format: uuid } }]
+      responses: { '200': { description: OK }, '404': { $ref: '#/components/responses/NotFound' } }
+  /presenters: { get: { responses: { '200': { description: OK } } } }
+  /presenters/{slug}: { get: { parameters: [{ name: slug, in: path, required: true, schema: { type: string } }], responses: { '200': { description: OK }, '404': { $ref: '#/components/responses/NotFound' } } } }
+  /categories: { get: { responses: { '200': { description: OK } } } }
+  /articles: { get: { parameters: [{ name: locale, in: query, schema: { type: string } }], responses: { '200': { description: OK } } } }
+  /devotionals: { get: { parameters: [{ name: locale, in: query, schema: { type: string } }], responses: { '200': { description: OK } } } }
+  /events: { get: { responses: { '200': { description: OK } } } }
+  /search: { get: { parameters: [{ name: q, in: query, required: true, schema: { type: string } }], responses: { '200': { description: OK }, '422': { description: Missing q } } } }
+  /platforms: { get: { summary: Enabled and verified external platforms, responses: { '200': { description: OK } } } }
+  /account:
+    get: { security: [{ session: [] }], responses: { '200': { description: OK }, '401': { $ref: '#/components/responses/Unauthenticated' } } }
+    patch:
+      security: [{ session: [] }]
+      requestBody: { content: { application/json: { schema: { type: object, required: [display_name, locale], properties: { display_name: { type: string }, locale: { type: string, enum: [en, fr, ht] } } } } } }
+      responses: { '200': { description: OK }, '401': { $ref: '#/components/responses/Unauthenticated' }, '403': { description: Cross-origin refused }, '422': { description: Invalid } }
+  /account/export: { get: { security: [{ session: [] }], responses: { '200': { description: JSON download } } } }
+  /favorites:
+    get: { security: [{ session: [] }], responses: { '200': { description: OK } } }
+    post:
+      security: [{ session: [] }]
+      requestBody: { content: { application/json: { schema: { type: object, required: [episodeId], properties: { episodeId: { type: string, format: uuid } } } } } }
+      responses: { '201': { description: Created }, '200': { description: Already saved } }
+  /favorites/{id}: { delete: { security: [{ session: [] }], parameters: [{ name: id, in: path, required: true, schema: { type: string, format: uuid } }], responses: { '204': { description: Removed } } } }
+  /listening/progress:
+    post:
+      security: [{ session: [] }]
+      requestBody: { content: { application/json: { schema: { type: object, required: [episodeId, position], properties: { episodeId: { type: string, format: uuid }, position: { type: integer }, completed: { type: boolean } } } } } }
+      responses: { '200': { description: OK } }
+  /listening/history:
+    post:
+      security: [{ session: [] }]
+      requestBody: { content: { application/json: { schema: { type: object, required: [kind], properties: { kind: { type: string, enum: [live, episode] }, episodeId: { type: string, format: uuid } } } } } }
+      responses: { '200': { description: OK } }
+  /webhooks/payments: { post: { summary: Stripe webhook (signature-verified), responses: { '200': { description: Received }, '400': { description: Bad signature }, '503': { description: Not configured } } } }
+  /webhooks/radio: { post: { summary: AzuraCast webhook (shared-secret header), responses: { '200': { description: OK }, '401': { description: Bad token } } } }
