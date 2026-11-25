@@ -20,7 +20,15 @@ export function localizedMeta(locale: Locale, path: string, title?: string, desc
     title,
     description,
     alternates: { canonical: `${env.appUrl}/${locale}${path}`, languages: { ...languages, "x-default": `${env.appUrl}/en${path}` } },
-    openGraph: { title, description, url: `${env.appUrl}/${locale}${path}`, siteName: "The Kingdom Sound Radio", locale, type: "website" },
+    openGraph: {
+      title,
+      description,
+      url: `${env.appUrl}/${locale}${path}`,
+      siteName: "The Kingdom Sound Radio",
+      locale,
+      type: "website",
+      images: [{ url: "/brand/og-image.jpg", width: 1200, height: 630, alt: "The Kingdom Sound Radio" }],
+    },
   };
 }
 

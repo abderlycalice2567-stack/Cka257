@@ -7,13 +7,13 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Broadcasting Faith. Connecting Communities. Transforming Lives.",
     start_url: "/",
     display: "standalone",
-    background_color: "#0B1120",
+    background_color: "#000F24",
     theme_color: "#0B1120",
     categories: ["music", "news", "lifestyle"],
     icons: [
-      { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
-      { src: "/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+      { src: "/brand/emblem-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/brand/emblem-512.png", sizes: "512x512", type: "image/png" },
+      { src: "/brand/emblem-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
       { name: "Listen live", url: "/en/live" },

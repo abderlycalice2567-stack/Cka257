@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePlayer, type LiveStatus } from "./player-provider";
 import { ProgramArt } from "@/components/ui/art";
+import { Emblem } from "@/components/site/logo";
 import * as I from "@/components/icons";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -76,7 +77,7 @@ export function PlayerBar({ t, locale }: { t: PlayerStrings; locale: string }) {
         </div>
       )}
       <div className="container flex items-center gap-3 py-2.5">
-        <ProgramArt seed={isLive ? "live-kingdom-sound" : (p.episode?.seed ?? "ep")} label={isLive ? "KS" : title} className="h-12 w-12 shrink-0" rounded="rounded-xl" />
+        {isLive ? <Emblem size={48} /> : <ProgramArt seed={p.episode?.seed ?? "ep"} label={title} className="h-12 w-12 shrink-0" rounded="rounded-xl" />}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             {isLive && <StatusPill status={p.liveStatus} t={t} />}

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ProgramArt } from "@/components/ui/art";
+import { Emblem } from "@/components/site/logo";
 import { ListenLiveButton } from "@/components/player/controls";
 import { LocalTime, Countdown } from "@/components/ui/local-time";
 import type { Dictionary } from "@/lib/i18n";
@@ -30,11 +31,11 @@ export function NowNext({
     <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] lg:items-start">
       <div className="card overflow-hidden">
         <div className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center">
-          <ProgramArt
-            seed={current?.program_slug ?? "autodj"}
-            label={current ? pick(current.program_title, locale) : "KS"}
-            className="h-28 w-28 shrink-0"
-          />
+          {current ? (
+            <ProgramArt seed={current.program_slug} label={pick(current.program_title, locale)} className="h-28 w-28 shrink-0" />
+          ) : (
+            <Emblem size={112} className="!rounded-2xl" />
+          )}
           <div className="min-w-0 flex-1">
             <p className="eyebrow mb-1">{t.live.onAirNow}</p>
             {current ? (

@@ -51,7 +51,7 @@ export async function programFeed(slug: string) {
       author: p.podcast_author || "The Kingdom Sound Radio",
       category: p.podcast_category,
       explicit: p.podcast_explicit,
-      imageUrl: p.cover_key ? `${env.appUrl}/media/${p.cover_key}` : `${env.appUrl}/icon-512.png`,
+      imageUrl: p.cover_key ? `${env.appUrl}/media/${p.cover_key}` : `${env.appUrl}/brand/podcast-cover-1400.jpg`,
     },
     (await feedItems(p.id)).map(toItem),
   );
@@ -68,7 +68,7 @@ export async function networkFeed() {
       author: "The Kingdom Sound Radio",
       category: "Religion & Spirituality",
       explicit: false,
-      imageUrl: `${env.appUrl}/icon-512.png`,
+      imageUrl: `${env.appUrl}/brand/podcast-cover-1400.jpg`,
     },
     (await feedItems()).map(toItem),
   );

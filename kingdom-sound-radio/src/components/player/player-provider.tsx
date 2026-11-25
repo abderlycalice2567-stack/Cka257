@@ -446,7 +446,7 @@ export function PlayerProvider({
     const ms = navigator.mediaSession;
     const title = s.mode === "episode" ? s.episode?.title : s.nowPlaying?.track?.title || s.nowPlaying?.program?.title || "The Kingdom Sound Radio";
     const artist = s.mode === "episode" ? s.episode?.subtitle : s.nowPlaying?.track?.artist || "The Kingdom Sound Radio";
-    ms.metadata = new MediaMetadata({ title: title ?? "", artist: artist ?? "", album: "The Kingdom Sound Radio", artwork: [{ src: "/icon-512.png", sizes: "512x512", type: "image/png" }] });
+    ms.metadata = new MediaMetadata({ title: title ?? "", artist: artist ?? "", album: "The Kingdom Sound Radio", artwork: [{ src: "/brand/emblem-512.png", sizes: "512x512", type: "image/png" }] });
     ms.setActionHandler("play", () => togglePlay());
     ms.setActionHandler("pause", () => togglePlay());
     ms.setActionHandler("stop", () => stop());

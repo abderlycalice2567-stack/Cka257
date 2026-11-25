@@ -13,6 +13,7 @@ import { ListenLiveButton } from "@/components/player/controls";
 import { EmptyState, EpisodeCard, ProgramCard, SampleBadge, SectionHeader } from "@/components/ui/blocks";
 import { Avatar } from "@/components/ui/art";
 import { NewsletterForm } from "@/components/forms/public-forms";
+import { FullLogo } from "@/components/site/logo";
 import * as I from "@/components/icons";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -41,21 +42,11 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
 
   const sections: Record<string, React.ReactNode> = {
     hero: (
-      <section key="hero" className="relative overflow-hidden bg-navy text-ivory">
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true" style={{ background: "radial-gradient(50% 70% at 80% 20%, rgba(212,175,55,.28), transparent 60%), radial-gradient(40% 60% at 10% 90%, rgba(86,97,138,.45), transparent 60%)" }} />
-        <svg className="pointer-events-none absolute bottom-0 right-0 h-48 w-[60%] opacity-20" viewBox="0 0 600 160" preserveAspectRatio="none" aria-hidden="true">
-          {Array.from({ length: 60 }, (_, i) => {
-            const h = 20 + Math.abs(Math.sin(i * 0.55) * 110) + (i % 5) * 6;
-            return <rect key={i} x={i * 10} y={160 - h} width="4" height={h} rx="2" fill="#D4AF37" />;
-          })}
-        </svg>
-        <div className="container relative grid gap-10 py-16 md:py-24 lg:grid-cols-[1.4fr_1fr] lg:items-center">
-          <div>
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/30 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-              <I.Radio size={14} /> The Kingdom Sound Radio
-            </p>
+      <section key="hero" className="relative overflow-hidden bg-[#000F24] text-ivory">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true" style={{ background: "radial-gradient(45% 65% at 75% 40%, rgba(37,99,235,.22), transparent 70%), radial-gradient(35% 50% at 10% 90%, rgba(212,175,55,.12), transparent 70%)" }} />
+        <div className="container relative grid gap-6 pb-16 pt-8 md:pb-24 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-10 lg:pt-14">
+          <div className="order-2 lg:order-1">
             <h1 className="text-4xl font-bold leading-[1.05] md:text-6xl">{t.home.heroTitle}</h1>
-            <p className="mt-3 font-display text-lg text-gold md:text-xl">{t.meta.tagline}</p>
             <p className="mt-5 max-w-xl text-base text-ivory/75 md:text-lg">{t.home.heroBody}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ListenLiveButton label={t.common.listenLive} stopLabel={t.live.stop} className="btn-live !px-6 !py-3 !text-base" />
@@ -64,15 +55,18 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               </Link>
             </div>
           </div>
-          <div className="hidden lg:block">
-            <div className="rounded-3xl border border-ivory/10 bg-ivory/5 p-6 backdrop-blur">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Listen · Discover · Connect</p>
-              <ul className="mt-4 space-y-4 text-sm text-ivory/80">
-                <li className="flex gap-3"><I.Radio className="mt-0.5 shrink-0 text-gold" /> {t.nav.live} — 24/7</li>
-                <li className="flex gap-3"><I.Replay className="mt-0.5 shrink-0 text-gold" /> {t.pages.podcastsTitle}</li>
-                <li className="flex gap-3"><I.Heart className="mt-0.5 shrink-0 text-gold" /> {t.nav.prayer} · {t.nav.testimonies}</li>
-              </ul>
-            </div>
+          <div className="order-1 mx-auto w-full max-w-md lg:order-2 lg:max-w-none">
+            <FullLogo
+              priority
+              className="h-auto w-full"
+              style={{
+                // Feather only the outer edges so the image blends into the hero without dimming the wordmark.
+                maskImage: "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent)",
+                WebkitMaskImage: "linear-gradient(to right, transparent, #000 7%, #000 93%, transparent), linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent)",
+                maskComposite: "intersect",
+                WebkitMaskComposite: "source-in",
+              }}
+            />
           </div>
         </div>
       </section>

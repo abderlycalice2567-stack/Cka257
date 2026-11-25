@@ -4,7 +4,7 @@ Nothing below has been assumed in production configuration. Items marked ★ blo
 
 ## Identity & legal
 - ★ Official domain name (proposed `thekingdomsoundradio.com`) and who owns the registrar/DNS accounts.
-- ★ Final logo and brand assets (the current mark is a placeholder).
+- Logo: **provided and integrated** (header emblem, homepage hero, app/browser icons, social-share image, podcast cover). ★ Please supply the original high-resolution or vector file (SVG/AI/PDF, ideally with a transparent background): the supplied 1536×1024 PNG is upscaled for the 1400×1400 podcast cover Apple requires, and a transparent version would let the logo sit on light backgrounds too.
 - ★ Legal entity, operating location and whether donations are tax-deductible (controls receipt wording).
 - ★ Privacy policy, terms and accessibility statement text (templates provided; legal review recommended).
 - ★ Music licensing arrangements for streaming, podcasts and downloads.

@@ -1,13 +1,13 @@
 // The Kingdom Sound Radio — service worker.
 // Network-first for public pages and the schedule API, with an offline copy.
 // Never caches account, admin, auth, media streams or form submissions.
-const VERSION = "ksr-v1";
+const VERSION = "ksr-v2";
 const STATIC = `${VERSION}-static`;
 const PAGES = `${VERSION}-pages`;
 const PRIVATE = /^\/(admin|api\/v1\/(account|favorites|follows|listening|notifications|reminders|donations|prayer|testimon))|\/(account|sign-in|sign-up|reset-password|verify-email|forgot-password)/;
 
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(STATIC).then((c) => c.addAll(["/icon.svg", "/icon-192.png", "/icon-512.png"])).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(STATIC).then((c) => c.addAll(["/brand/emblem-192.png", "/brand/emblem-512.png", "/brand/emblem-128.webp"])).then(() => self.skipWaiting()));
 });
 
 self.addEventListener("activate", (e) => {
@@ -23,7 +23,7 @@ self.addEventListener("fetch", (e) => {
   if (url.origin !== location.origin) return; // live streams and third parties pass through
   if (PRIVATE.test(url.pathname) || url.pathname.startsWith("/media/")) return;
 
-  if (url.pathname.startsWith("/_next/static/") || /\.(png|svg|woff2)$/.test(url.pathname)) {
+  if (url.pathname.startsWith("/_next/static/") || /\.(png|svg|webp|jpg|woff2)$/.test(url.pathname)) {
     e.respondWith(caches.match(req).then((hit) => hit || fetch(req).then((res) => {
       const copy = res.clone();
       caches.open(STATIC).then((c) => c.put(req, copy));
