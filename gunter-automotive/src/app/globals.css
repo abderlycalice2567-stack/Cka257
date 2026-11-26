@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+  body { @apply bg-cream font-sans text-ink antialiased; }
+  h1, h2, h3, h4 { @apply font-display text-brand; letter-spacing: -0.01em; }
+  :focus-visible { outline: 3px solid #D39B38; outline-offset: 2px; border-radius: 4px; }
+  .on-dark :focus-visible { outline-color: #F6E8CC; }
+}
+
+@layer components {
+  .btn { @apply inline-flex min-h-touch items-center justify-center gap-2 rounded-card px-5 py-3 text-base font-semibold transition-colors; }
+  .btn-primary { @apply btn bg-amber text-brand-800 hover:bg-amber-300; }
+  .btn-secondary { @apply btn border-2 border-brand bg-transparent text-brand hover:bg-brand hover:text-cream; }
+  .btn-on-dark { @apply btn border-2 border-cream/80 text-cream hover:bg-cream hover:text-brand; }
+  .card { @apply rounded-card bg-white p-6 shadow-card; }
+  .eyebrow { @apply text-sm font-semibold uppercase tracking-wider text-amber-800; }
+  .section { @apply py-16 md:py-24; }
+  .prose-body p { @apply mb-4 leading-relaxed text-ink-muted; }
+  .field-label { @apply mb-1 block text-sm font-semibold text-ink; }
+  .field-input { @apply block min-h-touch w-full rounded-lg border border-brand-200 bg-white px-3 py-2 text-base text-ink placeholder:text-ink-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-amber; }
+  .field-input[aria-invalid="true"] { @apply border-red-700 ring-1 ring-red-700; }
+  .field-error { @apply mt-1 text-sm font-medium text-red-800; }
+  .draft-note { @apply rounded-lg border border-dashed border-amber-800/60 bg-amber-100/60 px-3 py-2 text-sm text-amber-800; }
+}
