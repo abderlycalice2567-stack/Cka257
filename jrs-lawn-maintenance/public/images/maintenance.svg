@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-labelledby="t"><title id="t">Illustration: tidy yard with trimmed shrubs and a calendar for recurring visits</title>
+<rect width="600" height="400" fill="#F7F2E8"/>
+<path d="M0 250H600V400H0Z" fill="#28543A"/>
+<g fill="#1E3F2C"><rect x="40" y="200" width="120" height="60" rx="30"/><rect x="180" y="210" width="90" height="50" rx="25"/></g>
+<g transform="translate(360 60)"><rect width="180" height="170" rx="14" fill="#FFFFFF" stroke="#1E3F2C" stroke-width="5"/><rect width="180" height="42" rx="14" fill="#28543A"/><rect y="28" width="180" height="14" fill="#28543A"/>
+<g fill="#DCC8A4"><rect x="20" y="60" width="28" height="24" rx="4"/><rect x="62" y="60" width="28" height="24" rx="4"/><rect x="104" y="60" width="28" height="24" rx="4"/><rect x="146" y="60" width="18" height="24" rx="4"/><rect x="20" y="98" width="28" height="24" rx="4"/><rect x="104" y="98" width="28" height="24" rx="4"/><rect x="20" y="136" width="28" height="24" rx="4"/><rect x="62" y="136" width="28" height="24" rx="4"/><rect x="146" y="136" width="18" height="24" rx="4"/></g>
+<path d="M66 108l8 8 14-16" stroke="#28543A" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M150 106l5 6 8-12" stroke="#28543A" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+</svg>

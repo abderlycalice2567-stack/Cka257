@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-labelledby="t"><title id="t">Illustration: crisp lawn edge along a concrete walkway</title>
+<rect width="600" height="400" fill="#28543A"/>
+<g stroke="#3B6E4F" stroke-width="4">
+<path d="M20 60v20M60 120v20M100 40v20M140 300v20M30 250v20M90 200v20M170 150v20M200 360v20M50 340v20M130 90v20"/>
+<path d="M440 60v20M480 160v20M520 40v20M560 280v20M460 330v20M540 210v20M500 110v20M580 370v20"/></g>
+<path d="M240 0H400V400H240Z" fill="#DCC8A4"/>
+<path d="M240 0V400M400 0V400" stroke="#1E3F2C" stroke-width="8"/>
+<g stroke="#C4AF88" stroke-width="3"><path d="M240 100H400M240 200H400M240 300H400"/></g>
+</svg>

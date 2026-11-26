@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-labelledby="t"><title id="t">Illustration: a neatly mowed front lawn with a house and trees</title>
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF2EC"/><stop offset="1" stop-color="#F7F2E8"/></linearGradient></defs>
+<rect width="800" height="600" fill="url(#sky)"/>
+<circle cx="660" cy="110" r="48" fill="#DCC8A4"/>
+<g fill="#28543A" opacity=".35"><ellipse cx="120" cy="300" rx="130" ry="70"/><ellipse cx="700" cy="310" rx="150" ry="70"/></g>
+<g><rect x="300" y="200" width="250" height="150" fill="#FFFFFF" stroke="#1E3F2C" stroke-width="4"/><path d="M285 205 425 120 565 205Z" fill="#1E3F2C"/><rect x="405" y="270" width="40" height="80" fill="#DCC8A4" stroke="#1E3F2C" stroke-width="3"/><rect x="325" y="235" width="50" height="40" fill="#EAF2EC" stroke="#1E3F2C" stroke-width="3"/><rect x="475" y="235" width="50" height="40" fill="#EAF2EC" stroke="#1E3F2C" stroke-width="3"/></g>
+<g fill="#1E3F2C"><rect x="168" y="250" width="12" height="100"/><circle cx="174" cy="225" r="55"/><rect x="628" y="260" width="12" height="90"/><circle cx="634" cy="238" r="45"/></g>
+<path d="M0 345H800V600H0Z" fill="#28543A"/>
+<g fill="#3B6E4F"><path d="M0 345H800V385H0Z"/><path d="M0 425H800V465H0Z"/><path d="M0 505H800V545H0Z"/></g>
+<path d="M405 350 360 600H490L445 350Z" fill="#DCC8A4"/>
+<path d="M405 350 360 600" stroke="#F7F2E8" stroke-width="4"/><path d="M445 350 490 600" stroke="#F7F2E8" stroke-width="4"/>
+</svg>

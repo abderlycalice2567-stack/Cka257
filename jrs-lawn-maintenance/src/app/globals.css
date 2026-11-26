@@ -1,0 +1,34 @@
+@import "@fontsource-variable/manrope/wght.css";
+@import "@fontsource-variable/inter/wght.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 88px;
+  }
+  body {
+    @apply bg-white font-sans text-pine-ink antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid #28543a;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .bg-pine :focus-visible,
+  .bg-pine-ink :focus-visible {
+    outline-color: #dcc8a4;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
